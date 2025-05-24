@@ -1,0 +1,84 @@
+{
+  "reporting_entity_type": "Health Insurance Issuer",
+  "reporting_structure": {
+    "Primary": {
+      "in_network_files": [
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/MPNMRF_PHCS_20250324-MPI_PHCS_innetworkrates_PRAC_2025-03-24.json.gz",
+          "description": "MultiPlan PHCS PRAC"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/MPNMRF_PHCS_20250324-MPI_PHCS_innetworkrates_FAC_2025-03-21.json.gz",
+          "description": "MultiPlan PHCS FAC"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/MPNMRF_MPI_20250324-MPI_MPI_innetworkrates_PRAC_2025-03-24.json.gz",
+          "description": "MultiPlan Primary Network PRAC"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/MPNMRF_MPI_20250324-MPI_MPI_innetworkrates_FAC_2025-03-21.json.gz",
+          "description": "MultiPlan Primary Network FAC"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-02_Premera_A00005_ffs_in-network.json.gz",
+          "description": "A00005-ALASKA GLOBAL NETWORK"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-02_Premera_A00008_ffs_in-network.json.gz",
+          "description": "A00008-ALASKA HERITAGE NETWORK"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-02_Premera_W00005_ffs_in-network.json.gz",
+          "description": "W00005-PBC PAR NETWORK"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-02_Premera_W00008_ffs_in-network.json.gz",
+          "description": "W00008-PBC PPO (HERITAGE) NETWORK"
+        },
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-02_Premera_W00013_ffs_in-network.json.gz",
+          "description": "W00013-WASHINGTON DENTAL NETWORK- MEDICAL"
+        }
+      ],
+      "reporting_plans": [
+        {
+          "plan_id_type": "EIN",
+          "plan_name": "LIFEWISE HEALTH PLAN OF WA PREFERRED",
+          "plan_id": "911950223 ",
+          "plan_market_type": "Group"
+        }
+      ],
+      "allowed_amount_file": {
+        "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-04_LifeWiseWashington_Empty_allowed-amounts.json.gz",
+        "description": "LifeWise Health Plan of Washington Empty Allowed Amounts"
+      }
+    },
+    "HIOS Plan?": {
+      "in_network_files": [
+        {
+          "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-01_vallwwa-root_2d6fb9cf-b539-4e38-915c-f92bef0e9c3f_in-network-rates_VALLWWA_1_in-network-rates.json.gz",
+          "description": null
+        }
+      ],
+      "reporting_plans": [
+        {
+          "plan_id_type": "HIOS",
+          "plan_name": "LIFEWISE ALPINE",
+          "plan_id": "38498WA032",
+          "plan_market_type": "Individual"
+        },
+        {
+          "plan_id_type": "HIOS",
+          "plan_name": "LIFEWISE PRIMARY",
+          "plan_id": "38498WA032",
+          "plan_market_type": "Individual"
+        }
+      ],
+      "allowed_amount_file": {
+        "location": "https://lifewise.sapphiremrfhub.com/mrfs/202505/2025-04-04_LifeWiseWashington_Empty_allowed-amounts.json.gz",
+        "description": "LifeWise Health Plan of Washington Empty Allowed Amounts"
+      }
+    }
+  },
+  "reporting_entity_name": "LIFEWISE HEALTH PLAN OF WASHINGTON"
+}

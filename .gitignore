@@ -1,0 +1,12 @@
+.DS_Store
+
+
+*.json.gz
+
+*.gz
+
+*.gz.index
+
+*.gz.index.gz
+
+*test-file*
