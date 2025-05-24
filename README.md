@@ -11,7 +11,7 @@ Anyway, I want to be able to access a GZIP file from any point within the file w
 
 The issue with a GZIP file is that, even though you can stream content from it, you need to decompress all the data that precedes the data you want to access.
 
-So as a proof of concept, and for the position that Daniel Brandao mentioned which wants to see my sample code, I'm going to try to figure out how to do random access to GZIP files. Evidently, if you can stream from beginning to end of a GZIP file, there has to be a way to continue streaming from a pre-indexed point. Maybe.
+So as a proof of concept, and for Daniel Brandao mentioning he wants to see my code, I'm going to try to figure out how to do random access to GZIP files. Evidently, if you can stream from beginning to end of a GZIP file, there has to be a way to continue streaming from a pre-indexed point. Maybe.
 
 I don't know if this is possible yet, but from the info I read from [GZTool](https://github.com/circulosmeos/gztool), I think it may be possible - and apparently a lot of other projects have tried to do this. 
 
