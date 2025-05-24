@@ -1,5 +1,5 @@
 # MRF Stream Parser
-
+One day, this will be a server or package where you can index and stream MRF files directly from the source, without storing petabytes of data in S3, then get normalized output from queries within seconds. 
 
 ## Overview
 
@@ -15,7 +15,8 @@ So as a proof of concept, and for Daniel Brandao mentioning he wants to see my c
 
 I don't know if this is possible yet, but from the info I read from [GZTool](https://github.com/circulosmeos/gztool), I think it may be possible - and apparently a lot of other projects have tried to do this. 
 
-```If you want to tail generic gzip files (including bgzip files!), you can use gztool.  -- @circulosmeos, github```
+> "If you want to tail generic gzip files (including bgzip files!), you can use gztool."
+>       -- @circulosmeos, github
 
 I don't want to reinvent the wheel - especially a wheel that may be beyond by abilities to carve out in an afternoon - so in this project, I am going to try to understand how these tools work, then apply them to a real use-case that I have been working on building. 
 
@@ -23,11 +24,10 @@ I don't want to reinvent the wheel - especially a wheel that may be beyond by ab
 - [Overview](#overview)
 - [Table of Contents](#table-of-contents)
 - [General Roadmap](#general-roadmap)
-- [Background Information](#background-information)
-- [Scripts](#scripts)
+<!-- - [Background Information](#background-information) -->
 - [Data Sources](#data-sources)
-- [Contributing](#contributing)
-- [License](#license)
+- [Scripts](#scripts)
+
 
 ## General Roadmap
 
@@ -66,14 +66,11 @@ head -c 5000 ./test-data/lifewise/secondary-gzipped/test-file | more
 
 tail -c 5000 ./test-data/lifewise/secondary-gzipped/test-file | more
 
-
-
 ```
 
-But don't open the file! You need a specialized text editor capable of viewing only parts of a file at a time. 
+But don't open the file! You need a specialized text editor capable of viewing only parts of a file at a time. Otherwise this is what happens:
 
 <img src="docs/img/run-out-of-memory.png" alt="Run out of memory" width="400">
-
 
 We can see what type of info is in the file with the aformentioned head and tail files. 
 
@@ -107,14 +104,52 @@ sudo cp ./gztool /usr/local/bin/gztool
 
 # Test it
 gztool -hh
+
 ```
 
 Okay great. I have now gathered all materials. Here are questions I have:
 
-- Should I download the entire gzip file first, then index it? Or should I index it as it is growing
+
+1. Should I download the entire gzip file first, then index it? Or should I index it as it is growing
+
     - For now, since I don't know anything about this tool, let's just try indexing 1) a fully-downloaded file first, or 2) a file that is being downloaded live. 
-    - How do I know how much indexing I want to do? If there are 10s of Petabytes of data in aggregate for 700 different insurance providers, even the index files will be big. 
-    - Now that I have a file with all the indexes, can I download only a chunk of the gzip from the internet using an HTTP range request, then still decompress it? That's my ultimate goal, all my efforts will become a waste of time if this part doesn't work. 
+        - Later, I can try indexing without ever downloading the file to local storage/memory. I'm not sure why I'd do that, but maybe it will save costs. 
+
+2. How do I know how much indexing I want to do, or how I should index? If there are 10s of Petabytes of data in aggregate for 700 different insurance providers, even the index files will be big. 
+
+    - Index Heuristic: How can I keep my index filesize low without losing performance?
+
+    - Structured Access using Indexes: Since I'm ultimately accessing JSON, what if I can create indexes for chunks that result in JSON that has correct structure? Otherwise, when I do random access, I get JSON output that may be cut off, and I'll need to also retrieve prior chunks.  
+
+    - Meaningful Labeling of Indexes: How can I label indexes so I know which ones matter? Like what if I want to access the data by a zip code or certain medical plan or something? 
+
+    - Embeddings?: I may be making things up here - but what if I mapped out all the data from each file into embeddings and do something with baseline RAG or GraphRAG to know what I should retrieve? This may be a useful brute force method when I want to optimize search without actually having meaningful indexes. It'll just be so much more compute. 
+
+3. Now that I will have a file with all the indexes, can I download only a chunk of the gzip from the internet using an HTTP range request and still decompress it? 
+
+    - This is my ultimate goal, otherwise all my efforts will naturally be a waste of time if this part doesn't work. 
+
+    - **Spoiler:** it totally works
+
+
+Let's start with 3 then - Testing Feasibility of GZIP Random Access - because it's a priority. 
+
+#### Test Feasibility of GZIP Random Access
+
+Index a downloaded GZIP file, create an HTTP Range Request of an indexed portion from a remote source, then decompress it. 
+
+```
+# Not sure if this math is right, but something like this essentially:
+
+start = index_byte_loc
+end   = index_byte_loc + index_chunk_size - (1 byte)
+
+# or end could be something like this instead: 
+
+end   = next_index_byte_loc
+
+curl -H "Range: bytes=[start]-[end]" http://example.com/file.gz
+```
 
 
 
@@ -127,7 +162,9 @@ Okay great. I have now gathered all materials. Here are questions I have:
 - `download_test_gzip.sh`: Script to download a test gzip file for data processing.
 
     ```
+
     chmod +x ./init_scripts/download_test_gzip.sh
     ./init_scripts/download_test_gzip.sh
+
     ```
 
